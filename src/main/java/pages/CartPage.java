@@ -21,4 +21,16 @@ public class CartPage extends HeaderPage {
     public String getProductPrice(String productName) {
         return driver.findElement(By.xpath(String.format(PRODUCT_PRICE, productName))).getText();
     }
+
+    public Integer getProductQuantity() {
+        return driver.findElements(By.xpath(CART_ITEM_CONTAINER)).size();
+    }
+
+    public void removeProductFromCart(String productName) {
+        driver.findElement(By.xpath(String.format(REMOVE_BUTTON, productName))).click();
+    }
+
+    public boolean isProductDisplayed(String productName) {
+        return !driver.findElements(By.xpath(String.format(PRODUCT_ITEM, productName))).isEmpty();
+    }
 }
