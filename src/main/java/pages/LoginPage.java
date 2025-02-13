@@ -2,6 +2,12 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 
 public class LoginPage extends BasePage {
@@ -25,5 +31,18 @@ public class LoginPage extends BasePage {
 
     public String getErrorMessageText() {
         return driver.findElement(ERROR_MESSAGE).getText();
+
+        driver.findElement(By.xpath("//input[@type='file']")).sendKeys("путь к файлу");
+        driver.findElement(By.cssSelector("Кнопка старта загрузки")).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        wait.until(ExpectedConditions.invisibilityOf(loader));
     }
+
+    public void waitForPageOpened() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(LOGIN_BUTTON));
+    }
+
+    Actions actions = new Actions(driver);
+    actions
 }
