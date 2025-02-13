@@ -31,18 +31,10 @@ public class LoginPage extends BasePage {
 
     public String getErrorMessageText() {
         return driver.findElement(ERROR_MESSAGE).getText();
-
-        driver.findElement(By.xpath("//input[@type='file']")).sendKeys("путь к файлу");
-        driver.findElement(By.cssSelector("Кнопка старта загрузки")).click();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-        wait.until(ExpectedConditions.invisibilityOf(loader));
     }
 
     public void waitForPageOpened() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         wait.until(ExpectedConditions.visibilityOfElementLocated(LOGIN_BUTTON));
     }
-
-    Actions actions = new Actions(driver);
-    actions
 }
