@@ -1,7 +1,13 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
+
+import java.time.Duration;
 
 public class CartPage extends HeaderPage {
     private static final String PRODUCT_ITEM = "//*[text()='%s']/ancestor::*[@class=\"cart_item\"]";
@@ -33,4 +39,23 @@ public class CartPage extends HeaderPage {
     public boolean isProductDisplayed(String productName) {
         return !driver.findElements(By.xpath(String.format(PRODUCT_ITEM, productName))).isEmpty();
     }
+
+    public void iwait(By locator) {
+        Wait<WebDriver> fluent = new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(10))
+                .pollingEvery(Duration.ofSeconds(5))
+                .ignoring(NoSuchElementException.class);
+        WebElement foo = fluent.until(driver -> driver.findElement(locator));
+        foo.click();
+    }
+
+    public void enterIframeText() {
+        driver.switchTo().frame((WebElement) By.id("id"));
+        driver.findElement(By.id("id")).sendKeys("Text");
+        driver.findElement(By.id("id")).sendKeys("Text");
+        driver.findElement(By.id("id")).sendKeys("Text");
+        driver.findElement(By.id("id")).sendKeys("Text");
+        driver.switchTo().defaultContent();
+    }
+
 }
