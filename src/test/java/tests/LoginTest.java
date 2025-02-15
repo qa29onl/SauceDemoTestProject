@@ -1,31 +1,42 @@
 package tests;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
+import java.util.Arrays;
+import java.util.List;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import static pages.LoginPage.*;
 
 public class LoginTest extends BaseTest {
-    private static final Logger log = LoggerFactory.getLogger(LoginTest.class);
-
     @Test
     public void loginWithEmptyUsernameTest() {
         loginPage.openPage(LOGIN_PAGE_URL);
         loginPage.login("", PASSWORD);
         Assert.assertEquals(loginPage.getErrorMessageText(), EMPTY_FIELD_USERNAME_ERROR);
+    }
+
+    @Parameters({"username", "password"})
+    @Test
+    public void successLoginTest(@Optional("usernameExample") String user,
+                                 @Optional("passwordExample") String pass) {
+        loginPage.openPage(LOGIN_PAGE_URL);
+        loginPage.login(user, pass);
+        Assert.assertEquals(driver.getCurrentUrl(), "https://www.saucedemo.com/inventory.html");
+    }
+
+    @Test
+    public void listTest() {
+        List<String> list = Arrays.asList("1", "2", "3");
+        assertThat(list, hasItem("1"));
+        assertThat(list, containsInAnyOrder("1", "3"));
+        assertThat(5, greaterThan(2));//lessThan
     }
 
     @Test(description = "QA-1 This test login on site with empty password")
