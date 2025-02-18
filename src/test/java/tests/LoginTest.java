@@ -29,14 +29,6 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(driver.getCurrentUrl(), "https://www.saucedemo.com/inventory.html");
     }
 
-    @Test
-    public void listTest() {
-        List<String> list = Arrays.asList("1", "2", "3");
-        assertThat(list, hasItem("1"));
-        assertThat(list, containsInAnyOrder("1", "3"));
-        assertThat(5, greaterThan(2));//lessThan
-    }
-
     @Test(description = "QA-1 This test login on site with empty password")
     public void loginWithEmptyPasswordTest() {
         loginPage.openPage(LOGIN_PAGE_URL);
