@@ -5,11 +5,6 @@ import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import java.util.Arrays;
-import java.util.List;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 import static pages.LoginPage.*;
 
 public class LoginTest extends BaseTest {
@@ -22,8 +17,8 @@ public class LoginTest extends BaseTest {
 
     @Parameters({"username", "password"})
     @Test
-    public void successLoginTest(@Optional("usernameExample") String user,
-                                 @Optional("passwordExample") String pass) {
+    public void successLoginTest(@Optional(USERNAME) String user,
+                                 @Optional(PASSWORD) String pass) {
         loginPage.openPage(LOGIN_PAGE_URL);
         loginPage.login(user, pass);
         Assert.assertEquals(driver.getCurrentUrl(), "https://www.saucedemo.com/inventory.html");
