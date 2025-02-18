@@ -1,7 +1,5 @@
 package tests;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
@@ -58,7 +56,6 @@ public class LoginTest extends BaseTest {
     public void loginWithIncorrectFieldsTest() {
         loginPage.openPage(LOGIN_PAGE_URL);
         loginPage.login("efwefwe", "efwfwe");
-        headerPage.clickCartButton();
         Assert.assertEquals(loginPage.getErrorMessageText(), INCORRECT_DATA_IN_FIELDS);
     }
 }

@@ -33,6 +33,6 @@ public class CartTest extends BaseTest {
         loginPage.login(USERNAME, PASSWORD);
         productsPage.addProductToCart(SAUCE_LABS_BOLT_T_SHIRT, SAUCE_LABS_BACKPACK);
         cartPage.openPage(CART_PAGE_URL);
-        Assert.assertEquals(cartPage.getProductQuantity(), 1);
+        Assert.assertEquals(cartPage.getProductQuantity(), 2);
     }
 }
