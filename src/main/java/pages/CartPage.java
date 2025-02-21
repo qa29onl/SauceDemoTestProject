@@ -40,7 +40,7 @@ public class CartPage extends HeaderPage {
         return !driver.findElements(By.xpath(String.format(PRODUCT_ITEM, productName))).isEmpty();
     }
 
-    public void iwait(By locator) {
+    public void wait(By locator) {
         Wait<WebDriver> fluent = new FluentWait<>(driver)
                 .withTimeout(Duration.ofSeconds(10))
                 .pollingEvery(Duration.ofSeconds(5))
@@ -48,14 +48,4 @@ public class CartPage extends HeaderPage {
         WebElement foo = fluent.until(driver -> driver.findElement(locator));
         foo.click();
     }
-
-    public void enterIframeText() {
-        driver.switchTo().frame((WebElement) By.id("id"));
-        driver.findElement(By.id("id")).sendKeys("Text");
-        driver.findElement(By.id("id")).sendKeys("Text");
-        driver.findElement(By.id("id")).sendKeys("Text");
-        driver.findElement(By.id("id")).sendKeys("Text");
-        driver.switchTo().defaultContent();
-    }
-
 }

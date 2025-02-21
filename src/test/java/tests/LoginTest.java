@@ -1,5 +1,7 @@
 package tests;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
@@ -44,5 +46,16 @@ public class LoginTest extends BaseTest {
         loginPage.openPage(LOGIN_PAGE_URL);
         loginPage.login("efwefwe", "efwfwe");
         Assert.assertEquals(loginPage.getErrorMessageText(), INCORRECT_DATA_IN_FIELDS);
+    }
+
+    @Test
+    public void loginWithoutPageFactory() {
+        driver.get("https://the-internet.herokuapp.com/add_remove_elements/");
+        WebElement addButton = driver.findElement(By.xpath("//button[contains(.,'Add')]"));
+        addButton.click();
+        WebElement deleteButton = driver.findElement(By.xpath("//button[contains(.,'Delete')]"));
+        deleteButton.click();
+        addButton.click();
+        deleteButton.click();
     }
 }

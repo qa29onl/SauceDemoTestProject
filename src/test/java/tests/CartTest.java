@@ -18,8 +18,8 @@ public class CartTest extends BaseTest {
         };
     }
 
-    @Test(dataProvider = "products", groups = "products")
-    public void checkProductPriceInCartTest(String productName, String price) {
+    @Test(dataProvider = "products")
+    public void addProductToCartTest(String productName, String price){
         loginPage.openPage(LOGIN_PAGE_URL);
         loginPage.login(USERNAME, PASSWORD);
         productsPage.addProductToCart(productName);
@@ -34,5 +34,15 @@ public class CartTest extends BaseTest {
         productsPage.addProductToCart(SAUCE_LABS_BOLT_T_SHIRT, SAUCE_LABS_BACKPACK);
         cartPage.openPage(CART_PAGE_URL);
         Assert.assertEquals(cartPage.getProductQuantity(), 2);
+    }
+
+    @Test
+    public void removeItemFromCartTest() {
+        loginPage.openPage(LOGIN_PAGE_URL);
+        loginPage.login(USERNAME, PASSWORD);
+        productsPage.addProductToCart(SAUCE_LABS_BACKPACK);
+        cartPage.openPage(CART_PAGE_URL);
+        cartPage.removeProductFromCart(SAUCE_LABS_BACKPACK);
+        Assert.assertFalse(cartPage.isProductDisplayed(SAUCE_LABS_BACKPACK));
     }
 }
