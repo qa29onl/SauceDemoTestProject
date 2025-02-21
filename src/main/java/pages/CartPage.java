@@ -20,8 +20,9 @@ public class CartPage extends HeaderPage {
         super(driver);
     }
 
-    public void openPage(String url) {
+    public CartPage openCartPage(String url) {
         driver.get(url);
+        return this;
     }
 
     public String getProductPrice(String productName) {

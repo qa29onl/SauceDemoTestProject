@@ -4,7 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class CartTest extends BaseTest {
+public class CartTest extends Preconditions {
 
     @DataProvider(name = "products")
     public Object[][] productsAndPrices() {
@@ -18,31 +18,44 @@ public class CartTest extends BaseTest {
         };
     }
 
+    /**
+     *
+     * @param productName
+     * @param price
+     */
     @Test(dataProvider = "products")
     public void addProductToCartTest(String productName, String price){
-        loginPage.openPage(LOGIN_PAGE_URL);
-        loginPage.login(USERNAME, PASSWORD);
-        productsPage.addProductToCart(productName);
+        loginPage
+                .openPage(LOGIN_PAGE_URL);
+        loginPage
+                .waitForPageOpened()
+                .login(userSuccess)
+                .addProductToCart(productName);
         cartPage.openPage(CART_PAGE_URL);
         Assert.assertEquals(cartPage.getProductPrice(productName), price);
     }
 
     @Test(retryAnalyzer = Retry.class)
     public void checkQuantityTest() {
-        loginPage.openPage(LOGIN_PAGE_URL);
-        loginPage.login(USERNAME, PASSWORD);
-        productsPage.addProductToCart(SAUCE_LABS_BOLT_T_SHIRT, SAUCE_LABS_BACKPACK);
+        loginPage
+                .openPage(LOGIN_PAGE_URL);
+        loginPage
+                .login(userSuccess)
+                .addProductToCart(SAUCE_LABS_BOLT_T_SHIRT, SAUCE_LABS_BACKPACK);
         cartPage.openPage(CART_PAGE_URL);
         Assert.assertEquals(cartPage.getProductQuantity(), 2);
     }
 
     @Test
     public void removeItemFromCartTest() {
-        loginPage.openPage(LOGIN_PAGE_URL);
-        loginPage.login(USERNAME, PASSWORD);
-        productsPage.addProductToCart(SAUCE_LABS_BACKPACK);
-        cartPage.openPage(CART_PAGE_URL);
-        cartPage.removeProductFromCart(SAUCE_LABS_BACKPACK);
+        loginPage
+                .openPage(LOGIN_PAGE_URL);
+        loginPage
+                .login(userSuccess)
+                .addProductToCart(SAUCE_LABS_BACKPACK);
+        cartPage
+                .openCartPage(CART_PAGE_URL)
+                .removeProductFromCart(SAUCE_LABS_BACKPACK);
         Assert.assertFalse(cartPage.isProductDisplayed(SAUCE_LABS_BACKPACK));
     }
 }

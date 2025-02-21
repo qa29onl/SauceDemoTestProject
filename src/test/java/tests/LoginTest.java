@@ -9,11 +9,11 @@ import org.testng.annotations.Test;
 
 import static pages.LoginPage.*;
 
-public class LoginTest extends BaseTest {
+public class LoginTest extends Preconditions {
     @Test
     public void loginWithEmptyUsernameTest() {
         loginPage.openPage(LOGIN_PAGE_URL);
-        loginPage.login("", PASSWORD);
+        loginPage.login(userWithEmptyUsername);
         Assert.assertEquals(loginPage.getErrorMessageText(), EMPTY_FIELD_USERNAME_ERROR);
     }
 
@@ -29,22 +29,23 @@ public class LoginTest extends BaseTest {
     @Test(description = "QA-1 This test login on site with empty password")
     public void loginWithEmptyPasswordTest() {
         loginPage.openPage(LOGIN_PAGE_URL);
-        loginPage.waitForPageOpened();
-        loginPage.login(USERNAME, "");
+        loginPage
+                .waitForPageOpened()
+                .login(userWithEmptyPassword);
         Assert.assertEquals(loginPage.getErrorMessageText(), EMPTY_FIELD_PASSWORD_ERROR);
     }
 
     @Test
     public void loginWithEmptyFieldsTest() {
         loginPage.openPage(LOGIN_PAGE_URL);
-        loginPage.login("", "");
+        loginPage.login(userEmptyFields);
         Assert.assertEquals(loginPage.getErrorMessageText(), EMPTY_FIELD_USERNAME_ERROR);
     }
 
     @Test
     public void loginWithIncorrectFieldsTest() {
         loginPage.openPage(LOGIN_PAGE_URL);
-        loginPage.login("efwefwe", "efwfwe");
+        loginPage.login(userIncorrectFields);
         Assert.assertEquals(loginPage.getErrorMessageText(), INCORRECT_DATA_IN_FIELDS);
     }
 
@@ -55,6 +56,19 @@ public class LoginTest extends BaseTest {
         addButton.click();
         WebElement deleteButton = driver.findElement(By.xpath("//button[contains(.,'Delete')]"));
         deleteButton.click();
+
+        addButton.click();
+        deleteButton.click();
+    }
+
+    @Test
+    public void loginWithPageFactory() {
+        driver.get("https://the-internet.herokuapp.com/add_remove_elements/");
+        WebElement addButton = loginPageFactory.getAddButton();
+        addButton.click();
+        WebElement deleteButton = loginPageFactory.getDeleteButton();
+        deleteButton.click();
+
         addButton.click();
         deleteButton.click();
     }

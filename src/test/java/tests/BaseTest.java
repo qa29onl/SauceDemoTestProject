@@ -2,6 +2,7 @@ package tests;
 
 import constants.IConstants;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import listeners.TestListener;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
@@ -18,7 +19,11 @@ public class BaseTest implements IConstants, ITestConstants {
     ProductsPage productsPage;
     CartPage cartPage;
     HeaderPage headerPage;
+    LoginPageFactory loginPageFactory;
 
+    /**
+     * This is initialization of pages
+     */
     @BeforeMethod
     public void initTest() {
         WebDriverManager.chromedriver().setup();
@@ -33,6 +38,7 @@ public class BaseTest implements IConstants, ITestConstants {
         productsPage = new ProductsPage(driver);
         cartPage = new CartPage(driver);
         headerPage = new HeaderPage(driver);
+        loginPageFactory = new LoginPageFactory(driver);
     }
 
     @AfterMethod
