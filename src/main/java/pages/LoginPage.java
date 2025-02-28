@@ -1,6 +1,7 @@
 package pages;
 
 import entity.User;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -8,6 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
+@Log4j2
 public class LoginPage extends BasePage {
     public static final By USERNAME_INPUT = By.xpath("//*[@data-test='username']");
     public static final By PASSWORD_INPUT = By.xpath("//*[@data-test='password']");
@@ -25,6 +27,7 @@ public class LoginPage extends BasePage {
         driver.findElement(USERNAME_INPUT).sendKeys(user.getUsername());
         driver.findElement(PASSWORD_INPUT).sendKeys(user.getPassword());
         driver.findElement(LOGIN_BUTTON).click();
+        log.info(String.format("User Registered with data: username is %s", user.getUsername()));
         return new ProductsPage(driver);
     }
 
@@ -32,6 +35,7 @@ public class LoginPage extends BasePage {
         driver.findElement(USERNAME_INPUT).sendKeys(username);
         driver.findElement(PASSWORD_INPUT).sendKeys(password);
         driver.findElement(LOGIN_BUTTON).click();
+        log.info(String.format("User Registered with data: username is %s", username));
         return new ProductsPage(driver);
     }
 

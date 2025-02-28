@@ -4,6 +4,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import listeners.TestListener;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterMethod;
@@ -27,11 +28,17 @@ public class BaseTest implements ITestConstants {
     @BeforeMethod
     public void initTest(ITestContext iTestContext) {
         WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+//        options.addArguments("--window-size=1920,1080");
+
+        driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         initPages();
         PageFactory.initElements(driver, this);
+        iTestContext.setAttribute("driver", driver);
     }
 
     public void initPages() {
