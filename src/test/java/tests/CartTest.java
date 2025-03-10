@@ -9,6 +9,18 @@ import static constants.IConstants.*;
 public class CartTest extends Preconditions {
 
     @DataProvider(name = "products")
+    public Object[][] products() {
+        return new Object[][] {
+                {SAUCE_LABS_BACKPACK},
+                {SAUCE_LABS_BOLT_T_SHIRT},
+                {SAUCE_LABS_BIKE_LIGHT},
+                {SAUCE_LABS_FLEECE_JACKET},
+                {SAUCE_LABS_ONESIE},
+                {TEST_ALL_THE_THINGS_T_SHIRT_RED},
+        };
+    }
+
+    @DataProvider(name = "productsAndPrices")
     public Object[][] productsAndPrices() {
         return new Object[][] {
                 {SAUCE_LABS_BACKPACK, "$29.99"},
@@ -27,11 +39,11 @@ public class CartTest extends Preconditions {
         Assert.assertTrue(cartPage.isProductDisplayed(product));
     }
 
-    @Test
-    public void addProductToCartTest(){
-        productSteps.loginAndAddProduct(USERNAME,PASSWORD,SAUCE_LABS_BACKPACK);
+    @Test(dataProvider = "productsAndPrices")
+    public void addProductToCartTest(String product, String price){
+        productSteps.loginAndAddProduct(USERNAME, PASSWORD, product);
         cartPage.openCartPage(CART_PAGE_URL);
-        Assert.assertEquals(cartPage.getProductPrice(SAUCE_LABS_BACKPACK), "$19.99");
+        Assert.assertEquals(cartPage.getProductPrice(product), price);
     }
 
     @Test(dataProvider = "products")
