@@ -6,16 +6,16 @@ public class Preconditions extends BaseTest {
 
     protected final User userWithEmptyUsername = User.builder()
             .username("")
-            .password(PASSWORD)
+            .password(System.getenv("password"))
             .build();
 
     protected final User userSuccess = User.builder()
-            .username(USERNAME)
-            .password(PASSWORD)
+            .username(System.getenv("username"))
+            .password(System.getenv("password"))
             .build();
 
     protected final User userWithEmptyPassword = User.builder()
-            .username(USERNAME)
+            .username(System.getenv("username"))
             .password("")
             .build();
 

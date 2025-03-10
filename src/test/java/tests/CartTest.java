@@ -34,7 +34,7 @@ public class CartTest extends Preconditions {
 
     @Test(dataProvider = "products")
     public void addProductToCartWithDataProviderTest(String product){
-        productSteps.loginAndAddProduct(USERNAME,PASSWORD,product);
+        productSteps.loginAndAddProduct(System.getenv("username"), System.getenv("password"), product);
         cartPage.openCartPage(CART_PAGE_URL);
         Assert.assertTrue(cartPage.isProductDisplayed(product));
     }

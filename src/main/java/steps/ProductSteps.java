@@ -20,7 +20,7 @@ public class ProductSteps {
         loginPage
                 .openPage(IConstants.LOGIN_PAGE_URL);
         loginPage
-                .login(System.getProperty("username", username), System.getProperty("password", password))
+                .login(username, password)
                 .addProductToCart(productName);
         return this;
     }
