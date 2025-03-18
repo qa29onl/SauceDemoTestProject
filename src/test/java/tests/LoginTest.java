@@ -16,9 +16,23 @@ public class LoginTest extends Preconditions {
 
     @Parameters({"username", "password"})
     @Test
-    public void successLoginTest(@Optional(USERNAME) String user,
+    public void successLoginTest1(@Optional(USERNAME) String user,
                                  @Optional(PASSWORD) String pass) {
         loginSteps.loginAndWaitForPageOpened(user, pass);
+        Assert.assertEquals(driver.getCurrentUrl(), "https://www.saucedemo.com/inventory.html");
+    }
+
+    @Test
+    public void successLoginTest2() {
+        loginSteps.loginAndWaitForPageOpened(System.getenv("username"), System.getenv("password"));
+        Assert.assertEquals(driver.getCurrentUrl(), "https://www.saucedemo.com/inventory.html");
+    }
+
+    @Test
+    public void successLoginTest3() {
+        loginSteps.loginAndWaitForPageOpened(
+                System.getenv().getOrDefault("username", PropertyReader.getProperty("username")),
+                System.getenv().getOrDefault("password", PropertyReader.getProperty("password")));
         Assert.assertEquals(driver.getCurrentUrl(), "https://www.saucedemo.com/inventory.html");
     }
 
